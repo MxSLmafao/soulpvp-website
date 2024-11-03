@@ -21,18 +21,46 @@ function copyIP() {
 document.addEventListener('DOMContentLoaded', () => {
     const cards = document.querySelectorAll('.card');
     const cardsContainer = document.querySelector('.cards-container');
+    const cardSlider = document.querySelector('.card-slider');
     let currentIndex = 0;
 
     // Calculate positions for each card
     function calculateCardPositions() {
-        const containerWidth = cardsContainer.offsetWidth;
-        const cardWidth = 220; // Updated card width
+        const sliderWidth = cardSlider.offsetWidth;
+        const cardWidth = 220; // Base card width
         const spacing = 2; // Minimal spacing between cards
-
+        const activeScale = 1.2;
+        const inactiveScale = 0.85;
+        
+        // Calculate the scaled widths
+        const activeCardWidth = cardWidth * activeScale;
+        const inactiveCardWidth = cardWidth * inactiveScale;
+        
+        // Calculate the total width needed for all cards
+        const totalWidth = (cards.length - 1) * (inactiveCardWidth + spacing) + activeCardWidth;
+        
+        // Calculate the center point of the slider
+        const sliderCenter = sliderWidth / 2;
+        
+        // Calculate the initial offset to center the active card
+        const baseOffset = sliderCenter - (activeCardWidth / 2);
+        
         cards.forEach((card, index) => {
             const offset = index - currentIndex;
-            const xPosition = offset * (cardWidth + spacing);
-            const scale = index === currentIndex ? 1.2 : 0.85;
+            let xPosition;
+            
+            if (index < currentIndex) {
+                // Cards before active
+                xPosition = baseOffset - ((currentIndex - index) * (inactiveCardWidth + spacing));
+            } else if (index > currentIndex) {
+                // Cards after active
+                xPosition = baseOffset + activeCardWidth + ((index - currentIndex - 1) * (inactiveCardWidth + spacing));
+            } else {
+                // Active card
+                xPosition = baseOffset;
+            }
+
+            const scale = index === currentIndex ? activeScale : inactiveScale;
             const opacity = index === currentIndex ? 1 : 0.5;
             const zIndex = index === currentIndex ? 10 : 1;
 
@@ -45,23 +73,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 ease: "power2.out"
             });
         });
-
-        // Center the cards container
-        const totalWidth = cards.length * (cardWidth + spacing);
-        const centerOffset = (containerWidth - cardWidth) / 2;
-        gsap.to(cardsContainer, {
-            x: centerOffset - (currentIndex * (cardWidth + spacing)),
-            duration: 0.5,
-            ease: "power2.out"
-        });
     }
 
     // Initial setup
     cards.forEach((card, index) => {
         gsap.set(card, {
-            x: index * 222, // cardWidth + spacing
+            x: index * 222,
             opacity: index === 0 ? 1 : 0.5,
-            scale: index === 0 ? 1.2 : 0.85
+            scale: index === 0 ? 1.2 : 0.85,
+            zIndex: index === 0 ? 10 : 1
         });
     });
 
@@ -83,13 +103,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Auto-rotation
-    const autoRotation = setInterval(() => {
+    let autoRotation = setInterval(() => {
         goToSlide(currentIndex + 1);
     }, 5000);
 
     // Pause auto-rotation on hover
-    cardsContainer.addEventListener('mouseenter', () => {
+    cardSlider.addEventListener('mouseenter', () => {
         clearInterval(autoRotation);
+    });
+
+    cardSlider.addEventListener('mouseleave', () => {
+        autoRotation = setInterval(() => {
+            goToSlide(currentIndex + 1);
+        }, 5000);
     });
 
     // Handle window resize

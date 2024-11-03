@@ -131,17 +131,19 @@ header {
 
 .cards-container {
     display: flex;
-    position: relative;
+    justify-content: center;
+    gap: 0;
+    padding: 20px 0;
 }
 
 .card {
     flex: 0 0 180px;
-    margin: 0 1px;
+    margin: 0;
     padding: 20px;
     background: rgba(0, 0, 0, 0.7);
     border-radius: 8px;
     border: 2px solid #54770f;
-    transition: none;
+    transition: transform 0.3s ease;
 }
 
 .card img {

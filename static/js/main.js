@@ -19,40 +19,26 @@ function copyIP() {
 
 // Card Slider functionality
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize GSAP timeline for auto-rotation
     const cards = document.querySelectorAll('.card');
     const cardsContainer = document.querySelector('.cards-container');
     let currentIndex = 0;
 
-    // Initial setup
+    // Initial setup - all cards visible side by side
     gsap.set(cards, {
-        opacity: 0.5,
-        scale: 0.8,
-        x: (i) => i * 182  // New spacing (180px card + 2px total margin)
-    });
-    
-    gsap.set(cards[0], {
         opacity: 1,
         scale: 1
     });
 
     function goToSlide(index) {
-        gsap.to(cardsContainer, {
-            x: -index * 182,  // Match the new spacing
-            duration: 0.7,
-            ease: "power2.out"
-        });
-
-        // Animate cards
+        // Update animation to keep cards side by side
         cards.forEach((card, i) => {
             gsap.to(card, {
-                opacity: i === index ? 1 : 0.5,
-                scale: i === index ? 1 : 0.8,
+                opacity: 1,
+                scale: 1,
                 duration: 0.7,
                 ease: "power2.out"
             });
         });
-        
         currentIndex = index;
     }
 

@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.set(cards, {
         opacity: 0.5,
         scale: 0.8,
-        x: (i) => i * 320
+        x: (i) => i * 260
     });
     
     gsap.set(cards[0], {
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function goToSlide(index) {
         gsap.to(cardsContainer, {
-            x: -index * 320,
+            x: -index * 260,
             duration: 0.7,
             ease: "power2.out"
         });
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Auto-rotation
-    setInterval(() => {
+    const autoRotation = setInterval(() => {
         if (currentIndex < cards.length - 1) {
             goToSlide(currentIndex + 1);
         } else {

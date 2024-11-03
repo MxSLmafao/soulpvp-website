@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cards = document.querySelectorAll('.card');
     const cardsContainer = document.querySelector('.cards-container');
     const cardSlider = document.querySelector('.card-slider');
+    const featuresHeading = document.querySelector('.features h3');
     let currentIndex = 0;
 
     // Calculate positions for each card
@@ -32,18 +33,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const activeScale = 1.2;
         const inactiveScale = 0.85;
         
+        // Get the heading's center position
+        const headingRect = featuresHeading.getBoundingClientRect();
+        const headingCenter = headingRect.left + (headingRect.width / 2);
+        const sliderRect = cardSlider.getBoundingClientRect();
+        
         // Calculate the scaled widths
         const activeCardWidth = cardWidth * activeScale;
         const inactiveCardWidth = cardWidth * inactiveScale;
         
-        // Calculate the total width needed for all cards
-        const totalWidth = (cards.length - 1) * (inactiveCardWidth + spacing) + activeCardWidth;
-        
-        // Calculate the center point of the slider
-        const sliderCenter = sliderWidth / 2;
-        
-        // Calculate the initial offset to center the active card
-        const baseOffset = sliderCenter - (activeCardWidth / 2);
+        // Calculate positions relative to the heading center
+        const containerOffset = headingCenter - sliderRect.left - (activeCardWidth / 2);
         
         cards.forEach((card, index) => {
             const offset = index - currentIndex;
@@ -51,13 +51,13 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (index < currentIndex) {
                 // Cards before active
-                xPosition = baseOffset - ((currentIndex - index) * (inactiveCardWidth + spacing));
+                xPosition = containerOffset - ((currentIndex - index) * (inactiveCardWidth + spacing));
             } else if (index > currentIndex) {
                 // Cards after active
-                xPosition = baseOffset + activeCardWidth + ((index - currentIndex - 1) * (inactiveCardWidth + spacing));
+                xPosition = containerOffset + activeCardWidth + ((index - currentIndex - 1) * (inactiveCardWidth + spacing));
             } else {
-                // Active card
-                xPosition = baseOffset;
+                // Active card - centered under heading
+                xPosition = containerOffset;
             }
 
             const scale = index === currentIndex ? activeScale : inactiveScale;

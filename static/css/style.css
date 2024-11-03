@@ -121,10 +121,16 @@ header {
     border-radius: 8px;
 }
 
+.features h3 {
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
 .card-slider {
     position: relative;
     max-width: 900px;
-    margin: 2rem auto;
+    margin: 0 auto;
     overflow: hidden;
 }
 
@@ -135,6 +141,7 @@ header {
     gap: 2px;
     padding: 20px 0;
     min-height: 320px;
+    transform-style: preserve-3d;
 }
 
 .card {

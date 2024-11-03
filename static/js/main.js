@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.set(cards, {
         opacity: 0.5,
         scale: 0.8,
-        x: (i) => i * 226  // New spacing (220px card + 6px total margin)
+        x: (i) => i * 204  // New spacing (200px card + 4px total margin)
     });
     
     gsap.set(cards[0], {
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function goToSlide(index) {
         gsap.to(cardsContainer, {
-            x: -index * 226,  // Update this value as well
+            x: -index * 204,  // Match the new spacing
             duration: 0.7,
             ease: "power2.out"
         });

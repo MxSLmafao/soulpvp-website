@@ -35,16 +35,39 @@
             </section>
 
             <section class="features">
-                <div class="grass-block">
-                    <img src="{{ url_for('static', filename='images/grass_block.svg') }}" alt="Grass Block">
-                </div>
                 <h3>Server Features</h3>
-                <ul>
-                    <li>✦ Survival Gameplay</li>
-                    <li>✦ Active Community</li>
-                    <li>✦ Custom Plugins</li>
-                    <li>✦ Regular Events</li>
-                </ul>
+                <div class="card-slider">
+                    <div class="cards">
+                        <div class="card" data-feature="survival">
+                            <img src="{{ url_for('static', filename='images/survival.svg') }}" alt="Survival Gameplay">
+                            <h4>Survival Gameplay</h4>
+                            <p class="card-description">Experience authentic Minecraft survival with custom tweaks and balanced gameplay mechanics.</p>
+                        </div>
+                        <div class="card" data-feature="community">
+                            <img src="{{ url_for('static', filename='images/community.svg') }}" alt="Active Community">
+                            <h4>Active Community</h4>
+                            <p class="card-description">Join our friendly community of players and participate in group activities and projects.</p>
+                        </div>
+                        <div class="card" data-feature="plugins">
+                            <img src="{{ url_for('static', filename='images/plugins.svg') }}" alt="Custom Plugins">
+                            <h4>Custom Plugins</h4>
+                            <p class="card-description">Enjoy unique features with our carefully selected custom plugins enhancing your gameplay.</p>
+                        </div>
+                        <div class="card" data-feature="events">
+                            <img src="{{ url_for('static', filename='images/events.svg') }}" alt="Regular Events">
+                            <h4>Regular Events</h4>
+                            <p class="card-description">Participate in exciting weekly events, competitions, and special seasonal activities.</p>
+                        </div>
+                    </div>
+                    <div class="slider-controls">
+                        <button class="prev-btn minecraft-button">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="next-btn minecraft-button">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
             </section>
         </main>
     </div>

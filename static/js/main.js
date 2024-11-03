@@ -23,44 +23,69 @@ document.addEventListener('DOMContentLoaded', () => {
     const cardsContainer = document.querySelector('.cards-container');
     let currentIndex = 0;
 
-    // Initial setup - all cards visible side by side
-    gsap.set(cards, {
-        opacity: 1,
-        scale: 1
-    });
+    // Calculate positions for each card
+    function calculateCardPositions() {
+        const containerWidth = cardsContainer.offsetWidth;
+        const cardWidth = 240; // Width of each card
+        const spacing = 20; // Spacing between cards
 
-    function goToSlide(index) {
-        // Update animation to keep cards side by side
-        cards.forEach((card, i) => {
+        cards.forEach((card, index) => {
+            const offset = index - currentIndex;
+            const xPosition = offset * (cardWidth + spacing);
+            const scale = index === currentIndex ? 1.1 : 0.8;
+            const opacity = index === currentIndex ? 1 : 0.5;
+            const zIndex = index === currentIndex ? 10 : 1;
+
             gsap.to(card, {
-                opacity: 1,
-                scale: 1,
-                duration: 0.7,
+                x: xPosition,
+                scale: scale,
+                opacity: opacity,
+                zIndex: zIndex,
+                duration: 0.5,
                 ease: "power2.out"
             });
         });
+    }
+
+    // Initial setup
+    cards.forEach((card, index) => {
+        gsap.set(card, {
+            x: index * 260,
+            opacity: index === 0 ? 1 : 0.5,
+            scale: index === 0 ? 1.1 : 0.8
+        });
+    });
+
+    function goToSlide(index) {
+        if (index < 0) index = cards.length - 1;
+        if (index >= cards.length) index = 0;
+        
         currentIndex = index;
+        calculateCardPositions();
     }
 
     // Navigation buttons
     document.querySelector('.next').addEventListener('click', () => {
-        if (currentIndex < cards.length - 1) {
-            goToSlide(currentIndex + 1);
-        }
+        goToSlide(currentIndex + 1);
     });
 
     document.querySelector('.prev').addEventListener('click', () => {
-        if (currentIndex > 0) {
-            goToSlide(currentIndex - 1);
-        }
+        goToSlide(currentIndex - 1);
     });
 
     // Auto-rotation
     const autoRotation = setInterval(() => {
-        if (currentIndex < cards.length - 1) {
-            goToSlide(currentIndex + 1);
-        } else {
-            goToSlide(0);
-        }
+        goToSlide(currentIndex + 1);
     }, 5000);
+
+    // Pause auto-rotation on hover
+    cardsContainer.addEventListener('mouseenter', () => {
+        clearInterval(autoRotation);
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', calculateCardPositions);
+
+    // Initial positioning
+    calculateCardPositions();
 });

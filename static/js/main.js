@@ -19,69 +19,62 @@ function copyIP() {
 
 // Card Slider functionality
 document.addEventListener('DOMContentLoaded', () => {
-    const cards = document.querySelector('.cards');
-    const prevBtn = document.querySelector('.prev-btn');
-    const nextBtn = document.querySelector('.next-btn');
-    const cardElements = document.querySelectorAll('.card');
-    
+    // Initialize GSAP timeline for auto-rotation
+    const cards = document.querySelectorAll('.card');
+    const cardsContainer = document.querySelector('.cards-container');
     let currentIndex = 0;
-    const cardWidth = 300;
-    const cardGap = 32; // 2rem
-    const totalCards = cardElements.length;
+
+    // Initial setup
+    gsap.set(cards, {
+        opacity: 0.5,
+        scale: 0.8,
+        x: (i) => i * 320
+    });
     
-    // Auto-rotation interval (5 seconds)
-    let autoRotateInterval = setInterval(nextCard, 5000);
-
-    function updateSliderPosition() {
-        cards.style.transform = `translateX(-${currentIndex * (cardWidth + cardGap)}px)`;
-    }
-
-    function nextCard() {
-        currentIndex = (currentIndex + 1) % totalCards;
-        updateSliderPosition();
-    }
-
-    function prevCard() {
-        currentIndex = (currentIndex - 1 + totalCards) % totalCards;
-        updateSliderPosition();
-    }
-
-    // Click handlers for navigation buttons
-    nextBtn.addEventListener('click', () => {
-        clearInterval(autoRotateInterval);
-        nextCard();
-        autoRotateInterval = setInterval(nextCard, 5000);
+    gsap.set(cards[0], {
+        opacity: 1,
+        scale: 1
     });
 
-    prevBtn.addEventListener('click', () => {
-        clearInterval(autoRotateInterval);
-        prevCard();
-        autoRotateInterval = setInterval(nextCard, 5000);
-    });
-
-    // Card expansion functionality
-    cardElements.forEach(card => {
-        card.addEventListener('click', () => {
-            clearInterval(autoRotateInterval);
-            
-            // Toggle expansion of clicked card
-            const wasExpanded = card.classList.contains('expanded');
-            cardElements.forEach(c => c.classList.remove('expanded'));
-            
-            if (!wasExpanded) {
-                card.classList.add('expanded');
-            }
-            
-            autoRotateInterval = setInterval(nextCard, 5000);
+    function goToSlide(index) {
+        gsap.to(cardsContainer, {
+            x: -index * 320,
+            duration: 0.7,
+            ease: "power2.out"
         });
+
+        // Animate cards
+        cards.forEach((card, i) => {
+            gsap.to(card, {
+                opacity: i === index ? 1 : 0.5,
+                scale: i === index ? 1 : 0.8,
+                duration: 0.7,
+                ease: "power2.out"
+            });
+        });
+        
+        currentIndex = index;
+    }
+
+    // Navigation buttons
+    document.querySelector('.next').addEventListener('click', () => {
+        if (currentIndex < cards.length - 1) {
+            goToSlide(currentIndex + 1);
+        }
     });
 
-    // Reset auto-rotation when user interacts with cards
-    cards.addEventListener('mouseenter', () => {
-        clearInterval(autoRotateInterval);
+    document.querySelector('.prev').addEventListener('click', () => {
+        if (currentIndex > 0) {
+            goToSlide(currentIndex - 1);
+        }
     });
 
-    cards.addEventListener('mouseleave', () => {
-        autoRotateInterval = setInterval(nextCard, 5000);
-    });
+    // Auto-rotation
+    setInterval(() => {
+        if (currentIndex < cards.length - 1) {
+            goToSlide(currentIndex + 1);
+        } else {
+            goToSlide(0);
+        }
+    }, 5000);
 });

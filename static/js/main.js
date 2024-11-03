@@ -26,13 +26,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Calculate positions for each card
     function calculateCardPositions() {
         const containerWidth = cardsContainer.offsetWidth;
-        const cardWidth = 240; // Width of each card
-        const spacing = 20; // Spacing between cards
+        const cardWidth = 180; // Width of each card
+        const spacing = 2; // Minimal spacing between cards
 
         cards.forEach((card, index) => {
             const offset = index - currentIndex;
             const xPosition = offset * (cardWidth + spacing);
-            const scale = index === currentIndex ? 1.1 : 0.8;
+            const scale = index === currentIndex ? 1.2 : 0.85;
             const opacity = index === currentIndex ? 1 : 0.5;
             const zIndex = index === currentIndex ? 10 : 1;
 
@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 scale: scale,
                 opacity: opacity,
                 zIndex: zIndex,
+                transformOrigin: "center center",
                 duration: 0.5,
                 ease: "power2.out"
             });
@@ -50,9 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial setup
     cards.forEach((card, index) => {
         gsap.set(card, {
-            x: index * 260,
+            x: index * 182,
             opacity: index === 0 ? 1 : 0.5,
-            scale: index === 0 ? 1.1 : 0.8
+            scale: index === 0 ? 1.2 : 0.85,
+            transformOrigin: "center center"
         });
     });
 

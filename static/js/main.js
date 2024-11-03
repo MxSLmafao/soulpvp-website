@@ -27,48 +27,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Calculate positions for each card
     function calculateCardPositions() {
-        const sliderWidth = cardSlider.offsetWidth;
-        const cardWidth = 220; // Base card width
-        const spacing = 2; // Minimal spacing between cards
+        const cardWidth = 220;
+        const spacing = 2;
         const activeScale = 1.2;
         const inactiveScale = 0.85;
         
-        // Get the heading's center position
+        // Get the center position relative to the heading
         const headingRect = featuresHeading.getBoundingClientRect();
-        const headingCenter = headingRect.left + (headingRect.width / 2);
         const sliderRect = cardSlider.getBoundingClientRect();
+        const headingCenter = headingRect.left + (headingRect.width / 2);
         
-        // Calculate the scaled widths
+        // Calculate the active card's scaled width
         const activeCardWidth = cardWidth * activeScale;
-        const inactiveCardWidth = cardWidth * inactiveScale;
         
-        // Calculate positions relative to the heading center
-        const containerOffset = headingCenter - sliderRect.left - (activeCardWidth / 2);
+        // Calculate the base position to center the active card
+        const baseOffset = headingCenter - sliderRect.left - (activeCardWidth / 2);
         
         cards.forEach((card, index) => {
-            const offset = index - currentIndex;
-            let xPosition;
+            const isActive = index === currentIndex;
+            const scale = isActive ? activeScale : inactiveScale;
+            const scaledWidth = cardWidth * scale;
             
+            // Calculate horizontal position
+            let xPosition;
             if (index < currentIndex) {
                 // Cards before active
-                xPosition = containerOffset - ((currentIndex - index) * (inactiveCardWidth + spacing));
+                const offset = currentIndex - index;
+                xPosition = baseOffset - (offset * (cardWidth * inactiveScale + spacing));
             } else if (index > currentIndex) {
                 // Cards after active
-                xPosition = containerOffset + activeCardWidth + ((index - currentIndex - 1) * (inactiveCardWidth + spacing));
+                const offset = index - currentIndex;
+                xPosition = baseOffset + activeCardWidth + ((offset - 1) * (cardWidth * inactiveScale + spacing));
             } else {
-                // Active card - centered under heading
-                xPosition = containerOffset;
+                // Active card
+                xPosition = baseOffset;
             }
-
-            const scale = index === currentIndex ? activeScale : inactiveScale;
-            const opacity = index === currentIndex ? 1 : 0.5;
-            const zIndex = index === currentIndex ? 10 : 1;
-
+            
             gsap.to(card, {
                 x: xPosition,
                 scale: scale,
-                opacity: opacity,
-                zIndex: zIndex,
+                opacity: isActive ? 1 : 0.5,
+                zIndex: isActive ? 10 : 1,
                 duration: 0.5,
                 ease: "power2.out"
             });
@@ -78,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial setup
     cards.forEach((card, index) => {
         gsap.set(card, {
-            x: index * 222,
+            x: index * (220 + 2),
             opacity: index === 0 ? 1 : 0.5,
             scale: index === 0 ? 1.2 : 0.85,
             zIndex: index === 0 ? 10 : 1

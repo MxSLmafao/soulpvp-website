@@ -1,0 +1,136 @@
+@font-face {
+    font-family: 'Minecraft';
+    src: url('../fonts/minecraft.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --minecraft-dirt: #8B5E34;
+    --minecraft-grass: #5C9B1E;
+    --minecraft-stone: #828282;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Minecraft', Arial, sans-serif;
+    background-color: #282828;
+    color: white;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.logo {
+    max-width: 400px;
+    height: auto;
+}
+
+.server-info {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.ip-box {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 1rem;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 1rem 0;
+}
+
+#server-ip {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+
+.minecraft-button {
+    background-color: #54770f;
+    border: 2px solid #3c5508;
+    padding: 0.5rem 1rem;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+    margin: 0.5rem;
+    cursor: pointer;
+    font-family: 'Minecraft', Arial, sans-serif;
+    transition: background-color 0.2s;
+}
+
+.minecraft-button:hover {
+    background-color: #6a9414;
+}
+
+.links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.discord {
+    background-color: #7289DA;
+    border-color: #5b6eae;
+}
+
+.discord:hover {
+    background-color: #8499e4;
+}
+
+.store {
+    background-color: #f1c40f;
+    border-color: #c4a00c;
+}
+
+.store:hover {
+    background-color: #f4d03f;
+}
+
+.features {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    border-radius: 8px;
+}
+
+.features ul {
+    list-style: none;
+    margin-top: 1rem;
+}
+
+.features li {
+    margin: 0.5rem 0;
+}
+
+.grass-block {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 1rem;
+}
+
+@media (max-width: 768px) {
+    .links {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .ip-box {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+}

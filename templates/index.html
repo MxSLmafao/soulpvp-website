@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyMinecraft Server</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="{{ url_for('static', filename='images/minecraft_logo.svg') }}" alt="Minecraft Logo" class="logo">
+        </header>
+
+        <main>
+            <section class="server-info">
+                <h2>Join Our Server</h2>
+                <div class="ip-box">
+                    <span id="server-ip">{{ server_ip }}</span>
+                    <button onclick="copyIP()" class="minecraft-button">
+                        <i class="fas fa-copy"></i> Copy IP
+                    </button>
+                </div>
+            </section>
+
+            <section class="links">
+                <a href="{{ discord_invite }}" target="_blank" class="minecraft-button discord">
+                    <img src="{{ url_for('static', filename='images/discord_logo.svg') }}" alt="Discord Logo">
+                    Join our Discord
+                </a>
+                <a href="{{ store_url }}" target="_blank" class="minecraft-button store">
+                    <i class="fas fa-shopping-cart"></i> Visit Store
+                </a>
+            </section>
+
+            <section class="features">
+                <div class="grass-block">
+                    <img src="{{ url_for('static', filename='images/grass_block.svg') }}" alt="Grass Block">
+                </div>
+                <h3>Server Features</h3>
+                <ul>
+                    <li>✦ Survival Gameplay</li>
+                    <li>✦ Active Community</li>
+                    <li>✦ Custom Plugins</li>
+                    <li>✦ Regular Events</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

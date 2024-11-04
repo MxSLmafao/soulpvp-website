@@ -1,3 +1,4 @@
+/* Previous CSS remains the same until .card class */
 @font-face {
     font-family: 'Minecraft';
     src: url('../fonts/minecraft.woff2') format('woff2');
@@ -135,30 +136,30 @@ header {
 }
 
 .cards-container {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: 220px;
-    gap: 2px;
+    display: flex;
     justify-content: center;
     align-items: center;
     min-height: 320px;
-    transform-style: preserve-3d;
     padding: 20px 0;
+    transform-style: preserve-3d;
+    perspective: 1000px;
 }
 
 .card {
+    position: absolute;
+    width: 220px;
+    height: 280px;
     background: rgba(0, 0, 0, 0.7);
     border-radius: 8px;
     padding: 20px;
-    height: 280px;
-    display: grid;
-    grid-template-rows: auto auto 1fr;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-items: center;
+    justify-content: center;
     gap: 1rem;
-    transition: all 0.5s ease;
-    will-change: transform, opacity;
     transform-origin: center center;
+    transition: transform 0.5s ease;
+    will-change: transform, opacity;
 }
 
 .card img {
@@ -170,6 +171,7 @@ header {
     color: #ffffff;
     font-size: 1.2rem;
     margin: 0;
+    text-align: center;
 }
 
 .card p {

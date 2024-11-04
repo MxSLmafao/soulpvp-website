@@ -1,4 +1,4 @@
-/* Previous CSS remains the same until .ip-box button */
+/* Previous CSS remains the same until .card-slider */
 @font-face {
     font-family: 'Minecraft';
     src: url('../fonts/minecraft.woff2') format('woff2');
@@ -144,19 +144,15 @@ header {
 }
 
 .cards-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, 220px);
-    gap: 2px;
-    justify-content: center;
-    align-items: center;
-    min-height: 320px;
     position: relative;
+    min-height: 320px;
     margin: 0 auto;
     transform-style: preserve-3d;
     perspective: 1000px;
 }
 
 .card {
+    position: absolute;
     width: 220px;
     height: 280px;
     background: rgba(0, 0, 0, 0.7);

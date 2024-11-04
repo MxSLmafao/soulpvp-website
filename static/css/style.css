@@ -1,3 +1,4 @@
+/* Previous CSS remains the same until .ip-box button */
 @font-face {
     font-family: 'Minecraft';
     src: url('../fonts/minecraft.woff2') format('woff2');
@@ -36,11 +37,8 @@ header {
 }
 
 .logo {
-    max-width: 600px;
-    width: 100%;
+    max-width: 400px;
     height: auto;
-    margin: 0 auto;
-    display: block;
 }
 
 .server-info {
@@ -59,6 +57,14 @@ header {
 #server-ip {
     font-size: 1.5rem;
     margin-right: 1rem;
+}
+
+.ip-box button {
+    font-size: 1.2rem;
+}
+
+.ip-box button i {
+    font-size: 1.4rem;
 }
 
 .minecraft-button {
@@ -82,6 +88,9 @@ header {
 .minecraft-button i {
     width: 24px;
     height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .minecraft-button:hover {
@@ -124,6 +133,7 @@ header {
 .features h3 {
     text-align: center;
     margin-bottom: 2rem;
+    position: relative;
 }
 
 .card-slider {
@@ -135,11 +145,12 @@ header {
 
 .cards-container {
     display: grid;
-    grid-template-columns: repeat(4, 220px);
+    grid-template-columns: repeat(auto-fit, 220px);
     gap: 2px;
     justify-content: center;
     align-items: center;
     min-height: 320px;
+    position: relative;
     margin: 0 auto;
     transform-style: preserve-3d;
     perspective: 1000px;
@@ -221,9 +232,5 @@ header {
     .minecraft-button {
         width: 100%;
         max-width: 300px;
-    }
-
-    .cards-container {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     }
 }

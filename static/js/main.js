@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cards = document.querySelectorAll('.card');
     const cardsContainer = document.querySelector('.cards-container');
     const cardSlider = document.querySelector('.card-slider');
+    const featuresHeading = document.querySelector('.features h3');
     const CARD_WIDTH = 220;
     const SPACING = 2;
     const ACTIVE_SCALE = 1.2;
@@ -30,11 +31,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Calculate positions for each card
     function calculateCardPositions() {
+        // Get the exact center point of the heading
+        const headingRect = featuresHeading.getBoundingClientRect();
+        const headingCenter = headingRect.left + (headingRect.width / 2);
+        const containerRect = cardsContainer.getBoundingClientRect();
+
         cards.forEach((card, index) => {
             const isActive = index === currentIndex;
+            const scale = isActive ? ACTIVE_SCALE : INACTIVE_SCALE;
+            
+            // Calculate base position to center active card under heading
+            const basePosition = headingCenter - containerRect.left - (CARD_WIDTH / 2);
+            
+            // Calculate position relative to active card
+            let xPosition;
+            if (index < currentIndex) {
+                // Cards before active
+                const offset = currentIndex - index;
+                xPosition = basePosition - (offset * (CARD_WIDTH + SPACING));
+            } else if (index > currentIndex) {
+                // Cards after active
+                const offset = index - currentIndex;
+                xPosition = basePosition + (offset * (CARD_WIDTH + SPACING));
+            } else {
+                // Active card - centered under heading
+                xPosition = basePosition;
+            }
+
             gsap.to(card, {
-                scale: isActive ? ACTIVE_SCALE : INACTIVE_SCALE,
+                x: xPosition,
+                scale: scale,
                 opacity: isActive ? 1 : 0.5,
+                zIndex: isActive ? 10 : 1,
                 duration: 0.5,
                 ease: "power2.out"
             });
@@ -44,8 +72,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial setup
     cards.forEach((card, index) => {
         gsap.set(card, {
+            x: index * (CARD_WIDTH + SPACING),
             opacity: index === 0 ? 1 : 0.5,
-            scale: index === 0 ? ACTIVE_SCALE : INACTIVE_SCALE
+            scale: index === 0 ? ACTIVE_SCALE : INACTIVE_SCALE,
+            zIndex: index === 0 ? 10 : 1
         });
     });
 
@@ -81,6 +111,9 @@ document.addEventListener('DOMContentLoaded', () => {
             goToSlide(currentIndex + 1);
         }, 5000);
     });
+
+    // Handle window resize
+    window.addEventListener('resize', calculateCardPositions);
 
     // Initial positioning
     calculateCardPositions();

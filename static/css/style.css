@@ -22,6 +22,7 @@ body {
     background-color: #282828;
     color: white;
     line-height: 1.6;
+    overflow-x: hidden;
 }
 
 .container {
@@ -61,14 +62,6 @@ header {
     margin-right: 1rem;
 }
 
-.ip-box button {
-    font-size: 1.2rem;
-}
-
-.ip-box button i {
-    font-size: 1.4rem;
-}
-
 .minecraft-button {
     background-color: #54770f;
     border: 2px solid #3c5508;
@@ -90,9 +83,6 @@ header {
 .minecraft-button i {
     width: 24px;
     height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .minecraft-button:hover {
@@ -130,6 +120,7 @@ header {
     background-color: rgba(0, 0, 0, 0.5);
     padding: 2rem;
     border-radius: 8px;
+    overflow: hidden;
 }
 
 .features h3 {
@@ -140,24 +131,24 @@ header {
 
 .card-slider {
     position: relative;
-    max-width: 900px;
     margin: 0 auto;
-    overflow: hidden;
+    overflow: visible;
+    padding: 2rem 0;
 }
 
 .cards-container {
-    display: grid;
-    grid-template-columns: repeat(4, 220px);
-    gap: 2px;
+    position: relative;
+    height: 320px;
+    margin: 0 auto;
+    display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 320px;
-    margin: 0 auto;
     transform-style: preserve-3d;
     perspective: 1000px;
 }
 
 .card {
+    position: absolute;
     width: 220px;
     height: 280px;
     background: rgba(0, 0, 0, 0.7);
@@ -171,6 +162,7 @@ header {
     transform-origin: center center;
     transition: transform 0.5s ease, opacity 0.5s ease;
     will-change: transform, opacity;
+    pointer-events: auto;
 }
 
 .card img {
@@ -203,7 +195,7 @@ header {
     cursor: pointer;
     font-size: 1.2rem;
     border-radius: 4px;
-    z-index: 10;
+    z-index: 20;
 }
 
 .prev {
@@ -233,9 +225,5 @@ header {
     .minecraft-button {
         width: 100%;
         max-width: 300px;
-    }
-
-    .cards-container {
-        grid-template-columns: repeat(auto-fit, 220px);
     }
 }

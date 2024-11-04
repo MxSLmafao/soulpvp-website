@@ -23,34 +23,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const cardsContainer = document.querySelector('.cards-container');
     const cardSlider = document.querySelector('.card-slider');
     const featuresHeading = document.querySelector('.features h3');
-    const CARD_WIDTH = 220;
-    const SPACING = 2;
-    const ACTIVE_SCALE = 1.2;
-    const INACTIVE_SCALE = 0.85;
+    const cardWidth = 220; // Changed from CARD_WIDTH to cardWidth
+    const spacing = 2;
+    const activeScale = 1.2;
+    const inactiveScale = 0.85;
     let currentIndex = 0;
 
     // Calculate positions for each card
     function calculateCardPositions() {
-        const headingRect = featuresHeading.getBoundingClientRect();
-        const headingCenter = headingRect.left + (headingRect.width / 2);
         const containerRect = cardsContainer.getBoundingClientRect();
+        const containerWidth = containerRect.width;
+        const viewportCenter = window.innerWidth / 2;
+        const containerOffset = containerRect.left;
         
+        // Calculate base position that centers the active card
+        const basePosition = viewportCenter - containerOffset - (cardWidth * activeScale) / 2;
+
         cards.forEach((card, index) => {
             const isActive = index === currentIndex;
-            const scale = isActive ? ACTIVE_SCALE : INACTIVE_SCALE;
+            const scale = isActive ? activeScale : inactiveScale;
             
-            // Calculate the position based on CARD_WIDTH
-            const baseOffset = headingCenter - containerRect.left - (CARD_WIDTH / 2);
-            let xPosition;
-            
+            // Calculate horizontal position
+            let xPosition = basePosition;
             if (index < currentIndex) {
-                const offset = currentIndex - index;
-                xPosition = baseOffset - (offset * (CARD_WIDTH + SPACING));
+                xPosition -= (currentIndex - index) * (cardWidth + spacing);
             } else if (index > currentIndex) {
-                const offset = index - currentIndex;
-                xPosition = baseOffset + (offset * (CARD_WIDTH + SPACING));
-            } else {
-                xPosition = baseOffset;
+                xPosition += (index - currentIndex) * (cardWidth + spacing);
             }
 
             gsap.to(card, {
@@ -67,9 +65,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial setup
     cards.forEach((card, index) => {
         gsap.set(card, {
-            x: index * (CARD_WIDTH + SPACING),
+            x: index * (cardWidth + spacing),
             opacity: index === 0 ? 1 : 0.5,
-            scale: index === 0 ? ACTIVE_SCALE : INACTIVE_SCALE,
+            scale: index === 0 ? activeScale : inactiveScale,
             zIndex: index === 0 ? 10 : 1
         });
     });

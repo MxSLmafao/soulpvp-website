@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cards = document.querySelectorAll('.card');
     const cardsContainer = document.querySelector('.cards-container');
     const cardSlider = document.querySelector('.card-slider');
+    const featuresHeading = document.querySelector('.features h3');
     const CARD_WIDTH = 220;
     const CARD_SPACING = 20;
     const ACTIVE_SCALE = 1.2;
@@ -31,18 +32,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // Calculate positions for each card
     function updateCards() {
         const containerWidth = cardSlider.offsetWidth;
-        const centerOffset = (containerWidth - CARD_WIDTH) / 2;
+        const headingRect = featuresHeading.getBoundingClientRect();
+        const headingCenter = headingRect.left + (headingRect.width / 2);
+        const sliderRect = cardSlider.getBoundingClientRect();
+        const baseOffset = headingCenter - sliderRect.left - (CARD_WIDTH / 2);
 
         cards.forEach((card, index) => {
             const isActive = index === currentIndex;
             let position;
 
             if (index < currentIndex) {
-                position = centerOffset - ((currentIndex - index) * (CARD_WIDTH + CARD_SPACING));
+                position = baseOffset - ((currentIndex - index) * (CARD_WIDTH + CARD_SPACING));
             } else if (index > currentIndex) {
-                position = centerOffset + ((index - currentIndex) * (CARD_WIDTH + CARD_SPACING));
+                position = baseOffset + ((index - currentIndex) * (CARD_WIDTH + CARD_SPACING));
             } else {
-                position = centerOffset;
+                position = baseOffset;
             }
 
             gsap.to(card, {

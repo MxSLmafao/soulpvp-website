@@ -5,6 +5,18 @@
     font-style: normal;
 }
 
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
 :root {
     --minecraft-dirt: #8B5E34;
     --minecraft-grass: #5C9B1E;
@@ -19,7 +31,9 @@
 
 body {
     font-family: 'Minecraft', Arial, sans-serif;
-    background-color: #282828;
+    background: linear-gradient(45deg, #0066cc, #6600cc, #00cccc);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
     color: white;
     line-height: 1.6;
 }

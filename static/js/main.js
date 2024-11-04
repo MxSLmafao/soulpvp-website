@@ -21,41 +21,23 @@ function copyIP() {
 document.addEventListener('DOMContentLoaded', () => {
     const cards = document.querySelectorAll('.card');
     const cardsContainer = document.querySelector('.cards-container');
-    const cardSlider = document.querySelector('.card-slider');
-    const featuresHeading = document.querySelector('.features h3');
     const CARD_WIDTH = 220;
-    const SPACING = 2;
     const ACTIVE_SCALE = 1.2;
     const INACTIVE_SCALE = 0.85;
     let currentIndex = 0;
 
-    // Calculate positions for each card
-    function calculateCardPositions() {
-        // Calculate center position based on heading
-        const headingRect = featuresHeading.getBoundingClientRect();
-        const headingCenter = headingRect.left + (headingRect.width / 2);
-        const containerRect = cardsContainer.getBoundingClientRect();
-        const basePosition = headingCenter - containerRect.left - (CARD_WIDTH / 2);
+    // Simple card positioning function
+    function updateCards() {
+        const containerWidth = cardsContainer.offsetWidth;
+        const centerOffset = (containerWidth - CARD_WIDTH) / 2;
 
         cards.forEach((card, index) => {
             const isActive = index === currentIndex;
-            const scale = isActive ? ACTIVE_SCALE : INACTIVE_SCALE;
+            const offset = (index - currentIndex) * CARD_WIDTH;
             
-            // Calculate position relative to active card
-            let xPosition;
-            if (index < currentIndex) {
-                const offset = currentIndex - index;
-                xPosition = basePosition - (offset * (CARD_WIDTH + SPACING));
-            } else if (index > currentIndex) {
-                const offset = index - currentIndex;
-                xPosition = basePosition + (offset * (CARD_WIDTH + SPACING));
-            } else {
-                xPosition = basePosition;
-            }
-
             gsap.to(card, {
-                x: xPosition,
-                scale: scale,
+                x: centerOffset + offset,
+                scale: isActive ? ACTIVE_SCALE : INACTIVE_SCALE,
                 opacity: isActive ? 1 : 0.5,
                 zIndex: isActive ? 10 : 1,
                 duration: 0.5,
@@ -67,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial setup
     cards.forEach((card, index) => {
         gsap.set(card, {
-            x: index * (CARD_WIDTH + SPACING),
+            x: index * CARD_WIDTH,
             opacity: index === 0 ? 1 : 0.5,
             scale: index === 0 ? ACTIVE_SCALE : INACTIVE_SCALE,
             zIndex: index === 0 ? 10 : 1
@@ -79,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (index >= cards.length) index = 0;
         
         currentIndex = index;
-        calculateCardPositions();
+        updateCards();
     }
 
     // Navigation buttons
@@ -97,19 +79,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 5000);
 
     // Pause auto-rotation on hover
-    cardSlider.addEventListener('mouseenter', () => {
+    cardsContainer.addEventListener('mouseenter', () => {
         clearInterval(autoRotation);
     });
 
-    cardSlider.addEventListener('mouseleave', () => {
+    cardsContainer.addEventListener('mouseleave', () => {
         autoRotation = setInterval(() => {
             goToSlide(currentIndex + 1);
         }, 5000);
     });
 
     // Handle window resize
-    window.addEventListener('resize', calculateCardPositions);
+    window.addEventListener('resize', updateCards);
 
     // Initial positioning
-    calculateCardPositions();
+    updateCards();
 });

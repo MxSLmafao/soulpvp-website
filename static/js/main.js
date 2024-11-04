@@ -39,12 +39,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         cards.forEach((card, index) => {
             const isActive = index === currentIndex;
-            let position = baseOffset;
+            let position;
 
             if (index < currentIndex) {
                 position = baseOffset - ((currentIndex - index) * (CARD_WIDTH + CARD_SPACING));
             } else if (index > currentIndex) {
                 position = baseOffset + ((index - currentIndex) * (CARD_WIDTH + CARD_SPACING));
+            } else {
+                position = baseOffset;
             }
 
             gsap.to(card, {

@@ -31,31 +31,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Calculate positions for each card
     function calculateCardPositions() {
-        // Get the exact center point of the heading
         const headingRect = featuresHeading.getBoundingClientRect();
         const headingCenter = headingRect.left + (headingRect.width / 2);
         const containerRect = cardsContainer.getBoundingClientRect();
-
+        
         cards.forEach((card, index) => {
             const isActive = index === currentIndex;
             const scale = isActive ? ACTIVE_SCALE : INACTIVE_SCALE;
             
-            // Calculate base position to center active card under heading
-            const basePosition = headingCenter - containerRect.left - (CARD_WIDTH / 2);
-            
-            // Calculate position relative to active card
+            // Calculate the position based on CARD_WIDTH
+            const baseOffset = headingCenter - containerRect.left - (CARD_WIDTH / 2);
             let xPosition;
+            
             if (index < currentIndex) {
-                // Cards before active
                 const offset = currentIndex - index;
-                xPosition = basePosition - (offset * (CARD_WIDTH + SPACING));
+                xPosition = baseOffset - (offset * (CARD_WIDTH + SPACING));
             } else if (index > currentIndex) {
-                // Cards after active
                 const offset = index - currentIndex;
-                xPosition = basePosition + (offset * (CARD_WIDTH + SPACING));
+                xPosition = baseOffset + (offset * (CARD_WIDTH + SPACING));
             } else {
-                // Active card - centered under heading
-                xPosition = basePosition;
+                xPosition = baseOffset;
             }
 
             gsap.to(card, {

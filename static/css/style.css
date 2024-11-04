@@ -1,4 +1,4 @@
-/* Previous CSS remains the same until .card-slider */
+/* Previous CSS remains the same until .ip-box button */
 @font-face {
     font-family: 'Minecraft';
     src: url('../fonts/minecraft.woff2') format('woff2');
@@ -57,6 +57,14 @@ header {
 #server-ip {
     font-size: 1.5rem;
     margin-right: 1rem;
+}
+
+.ip-box button {
+    font-size: 1.2rem;
+}
+
+.ip-box button i {
+    font-size: 1.4rem;
 }
 
 .minecraft-button {
@@ -137,7 +145,7 @@ header {
 
 .cards-container {
     display: grid;
-    grid-template-columns: repeat(4, 220px);
+    grid-template-columns: repeat(auto-fit, 220px);
     gap: 2px;
     justify-content: center;
     align-items: center;
@@ -149,7 +157,6 @@ header {
 }
 
 .card {
-    position: absolute;
     width: 220px;
     height: 280px;
     background: rgba(0, 0, 0, 0.7);

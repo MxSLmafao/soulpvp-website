@@ -3,7 +3,7 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 # Configuration
-SERVER_IP = "play.example.com"
+SERVER_IP = "soulpvp.fun"
 DISCORD_INVITE = "https://discord.gg/your-invite-code"
 STORE_URL = "https://store.example.com"
 

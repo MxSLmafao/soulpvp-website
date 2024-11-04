@@ -22,7 +22,6 @@ body {
     background-color: #282828;
     color: white;
     line-height: 1.6;
-    overflow-x: hidden;
 }
 
 .container {
@@ -120,35 +119,33 @@ header {
     background-color: rgba(0, 0, 0, 0.5);
     padding: 2rem;
     border-radius: 8px;
-    overflow: hidden;
 }
 
 .features h3 {
     text-align: center;
     margin-bottom: 2rem;
-    position: relative;
 }
 
 .card-slider {
     position: relative;
+    max-width: 900px;
     margin: 0 auto;
-    overflow: visible;
-    padding: 2rem 0;
+    overflow: hidden;
 }
 
 .cards-container {
-    position: relative;
-    height: 320px;
-    margin: 0 auto;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, 220px);
+    gap: 2px;
     justify-content: center;
     align-items: center;
+    min-height: 320px;
+    margin: 0 auto;
     transform-style: preserve-3d;
     perspective: 1000px;
 }
 
 .card {
-    position: absolute;
     width: 220px;
     height: 280px;
     background: rgba(0, 0, 0, 0.7);
@@ -162,7 +159,6 @@ header {
     transform-origin: center center;
     transition: transform 0.5s ease, opacity 0.5s ease;
     will-change: transform, opacity;
-    pointer-events: auto;
 }
 
 .card img {
@@ -195,7 +191,7 @@ header {
     cursor: pointer;
     font-size: 1.2rem;
     border-radius: 4px;
-    z-index: 20;
+    z-index: 10;
 }
 
 .prev {
@@ -225,5 +221,9 @@ header {
     .minecraft-button {
         width: 100%;
         max-width: 300px;
+    }
+
+    .cards-container {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     }
 }

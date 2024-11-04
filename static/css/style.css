@@ -134,11 +134,7 @@ header {
 }
 
 .cards-container {
-    display: grid;
-    grid-template-columns: repeat(4, 220px);
-    gap: 2px;
-    justify-content: center;
-    align-items: center;
+    position: relative;
     min-height: 320px;
     margin: 0 auto;
     transform-style: preserve-3d;
@@ -146,7 +142,7 @@ header {
 }
 
 .card {
-    position: relative;
+    position: absolute;
     width: 220px;
     height: 280px;
     background: rgba(0, 0, 0, 0.7);

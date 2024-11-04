@@ -21,22 +21,32 @@ function copyIP() {
 document.addEventListener('DOMContentLoaded', () => {
     const cards = document.querySelectorAll('.card');
     const cardsContainer = document.querySelector('.cards-container');
+    const cardSlider = document.querySelector('.card-slider');
     const CARD_WIDTH = 220;
+    const CARD_SPACING = 20;
     const ACTIVE_SCALE = 1.2;
     const INACTIVE_SCALE = 0.85;
     let currentIndex = 0;
 
-    // Simple card positioning function
+    // Calculate positions for each card
     function updateCards() {
-        const containerWidth = cardsContainer.offsetWidth;
+        const containerWidth = cardSlider.offsetWidth;
         const centerOffset = (containerWidth - CARD_WIDTH) / 2;
 
         cards.forEach((card, index) => {
             const isActive = index === currentIndex;
-            const offset = (index - currentIndex) * CARD_WIDTH;
-            
+            let position;
+
+            if (index < currentIndex) {
+                position = centerOffset - ((currentIndex - index) * (CARD_WIDTH + CARD_SPACING));
+            } else if (index > currentIndex) {
+                position = centerOffset + ((index - currentIndex) * (CARD_WIDTH + CARD_SPACING));
+            } else {
+                position = centerOffset;
+            }
+
             gsap.to(card, {
-                x: centerOffset + offset,
+                x: position,
                 scale: isActive ? ACTIVE_SCALE : INACTIVE_SCALE,
                 opacity: isActive ? 1 : 0.5,
                 zIndex: isActive ? 10 : 1,
@@ -49,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial setup
     cards.forEach((card, index) => {
         gsap.set(card, {
-            x: index * CARD_WIDTH,
+            x: index * (CARD_WIDTH + CARD_SPACING),
             opacity: index === 0 ? 1 : 0.5,
             scale: index === 0 ? ACTIVE_SCALE : INACTIVE_SCALE,
             zIndex: index === 0 ? 10 : 1
@@ -79,11 +89,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 5000);
 
     // Pause auto-rotation on hover
-    cardsContainer.addEventListener('mouseenter', () => {
+    cardSlider.addEventListener('mouseenter', () => {
         clearInterval(autoRotation);
     });
 
-    cardsContainer.addEventListener('mouseleave', () => {
+    cardSlider.addEventListener('mouseleave', () => {
         autoRotation = setInterval(() => {
             goToSlide(currentIndex + 1);
         }, 5000);

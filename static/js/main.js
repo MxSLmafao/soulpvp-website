@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const isActive = index === currentIndex;
             const scale = isActive ? ACTIVE_SCALE : INACTIVE_SCALE;
             
-            // Calculate position relative to the active card
+            // Calculate position relative to active card
             let xPosition;
             if (index < currentIndex) {
                 const offset = currentIndex - index;
